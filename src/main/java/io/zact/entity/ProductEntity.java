@@ -3,6 +3,9 @@ package io.zact.entity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "products")
 public class ProductEntity extends PanacheEntityBase {
@@ -12,10 +15,13 @@ public class ProductEntity extends PanacheEntityBase {
     @Column(nullable = false)
     public Long id;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<PurchaseEntity> purchases = new ArrayList<>();
+
     @Column(nullable = false)
     public String name;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     public String description;
 
     @Column(nullable = false)
